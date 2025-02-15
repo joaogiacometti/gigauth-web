@@ -7,6 +7,8 @@ import Link from "next/link";
 export default function ForgotPasswordPage() {
   return (
     <form className="space-y-4">
+      <h1 className="text-center">Recover Password</h1>
+
       <div className="space-y-1">
         <Label htmlFor="email">Email</Label>
         <Input name="email" type="email" id="email"></Input>

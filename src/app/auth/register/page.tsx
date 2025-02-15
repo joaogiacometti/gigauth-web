@@ -7,6 +7,8 @@ import React from "react";
 export default function RegisterPage() {
   return (
     <form className="space-y-4">
+      <h1 className="text-center">Register</h1>
+
       <div className="space-y-1">
         <Label htmlFor="username">User name</Label>
         <Input name="username" id="username" />

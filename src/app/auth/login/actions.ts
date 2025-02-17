@@ -2,7 +2,7 @@
 
 import { refreshTokenName, tokenName } from "@/app/constants/tokens";
 import { ResponseAction } from "@/app/types/action";
-import { Login } from "@/services/signIn";
+import { Login } from "@/services/login";
 import { HTTPError } from "ky";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -10,12 +10,11 @@ import { z } from "zod";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+  password: z.string().trim().min(1, "Password is required"),
 });
 
 export async function loginAction(data: FormData): Promise<ResponseAction> {
-  const rawData = Object.fromEntries(data);
-  const result = loginSchema.safeParse(rawData);
+  const result = loginSchema.safeParse(Object.fromEntries(data));
 
   if (!result.success)
     return {

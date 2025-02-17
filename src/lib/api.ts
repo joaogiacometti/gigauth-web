@@ -1,11 +1,14 @@
+"use server";
+
 import ky from "ky";
+import { env } from "@/env";
 
 export const api = ky.create({
-  prefixUrl: "http://localhost:8080/",
+  prefixUrl: env.API_URL,
 });
 
-export const formatErrorMessage = (
+export const formatErrorMessage = async (
   message: string[] | undefined | null
-): string => {
+): Promise<string> => {
   return message?.join(", ") ?? "An error occurred";
 };

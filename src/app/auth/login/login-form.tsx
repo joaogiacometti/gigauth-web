@@ -14,7 +14,7 @@ export const LoginForm = () => {
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
-      <h1 className="text-center">Register</h1>
+      <h1 className="text-center">Login</h1>
 
       {!success && serviceError && (
         <ErrorService title="Login failed!" serviceError={serviceError} />

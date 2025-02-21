@@ -1,7 +1,7 @@
 import React from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertTriangle } from "lucide-react";
-import { formatErrorMessage } from "@/lib/api";
+import { formatErrorMessage } from "@/lib/utils";
 
 interface ErrorServiceProps {
   title: string;

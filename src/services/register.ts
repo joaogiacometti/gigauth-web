@@ -14,7 +14,7 @@ export async function Register({
   email,
   password,
   passwordConfirmation,
-}: RequestRegister): Promise<void> {
+}: RequestRegister) {
   return await api
     .post("auth/register", {
       json: {

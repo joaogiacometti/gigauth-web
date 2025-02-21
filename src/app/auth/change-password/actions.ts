@@ -1,28 +1,30 @@
 "use server";
 
 import { ResponseAction } from "@/app/types/action";
-import { ForgotPassword } from "@/services/forgot-password";
+import { passwordRegex, passwordRegexMessage } from "@/lib/regex";
+import { ChangePassword } from "@/services/change-password";
 import { HTTPError } from "ky";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
-const forgotPasswordSchema = z.object({
-  username: z.string().min(1, "Username is required"),
+const changePasswordSchema = z.object({
+  newPassword: z.string().regex(passwordRegex, passwordRegexMessage),
+  token: z.string().min(1, "Token is required"),
 });
 
-export async function forgotPasswordAction(
+export async function changePasswordAction(
   data: FormData
 ): Promise<ResponseAction> {
-  const result = forgotPasswordSchema.safeParse(Object.fromEntries(data));
+  const result = changePasswordSchema.safeParse(Object.fromEntries(data));
   if (!result.success)
     return {
       success: false,
       serviceError: null,
       validationErrors: result.error.flatten().fieldErrors,
     };
-  const { username } = result.data;
+  const { newPassword, token } = result.data;
   try {
-    await ForgotPassword({ username });
+    await ChangePassword({ newPassword, token });
   } catch (err) {
     if (err instanceof HTTPError) {
       return {
@@ -38,5 +40,5 @@ export async function forgotPasswordAction(
     };
   }
 
-  redirect("/auth/change-password");
+  redirect("/auth/login");
 }

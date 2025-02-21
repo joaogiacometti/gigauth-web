@@ -1,6 +1,6 @@
 "use server";
 
-import { passwordRegex } from "@/lib/regex";
+import { passwordRegex, passwordRegexMessage } from "@/lib/regex";
 import { Register } from "@/services/register";
 import { HTTPError } from "ky";
 import { redirect } from "next/navigation";
@@ -10,12 +10,7 @@ const registerSchema = z
   .object({
     username: z.string().min(8, "Username must be at least 8 characters"),
     email: z.string().email("Invalid email address"),
-    password: z
-      .string()
-      .regex(
-        passwordRegex,
-        "Your password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number and a special caractere."
-      ),
+    password: z.string().regex(passwordRegex, passwordRegexMessage),
     passwordConfirmation: z
       .string()
       .min(1, "Password confirmation is required"),
